@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeHome · весенний концерт 2 марта</title>
+    <!-- Подключаем элегантный шрифт Inter и Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #c1dec5 0%, #deecd9 40%, #f1fae8 100%);
+            position: relative;
+            overflow-x: hidden;
+            color: #1d3d2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        /* ========== НОВАЯ ВЕСЕННЯЯ АНИМАЦИЯ: ЛЕПЕСТКИ И ИСКРЫ ========== */
+        .spring-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Лепестки сакуры (очень нежные) */
+        .petal {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path fill="%23ffb7c5" d="M20 2 Q28 10 20 20 Q12 10 20 2" /><path fill="%23ffa5b4" d="M20 6 Q26 14 20 22 Q14 14 20 6" /><circle cx="15" cy="12" r="2" fill="%23ffe0b5"/></svg>') no-repeat center/contain;
+            opacity: 0.6;
+            animation: floatPetal linear infinite;
+            filter: drop-shadow(0 3px 5px rgba(200, 120, 140, 0.3));
+        }
+
+        /* Искры / блики (лёгкие, прозрачные) */
+        .spark {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="8" fill="%23fffde7" opacity="0.9"/><path fill="%23fff2b5" d="M20 2 L24 14 L36 16 L26 24 L30 38 L20 30 L10 38 L14 24 L4 16 L16 14 Z"/></svg>') no-repeat center/contain;
+            opacity: 0.7;
+            animation: floatSpark ease-in-out infinite;
+            filter: drop-shadow(0 0 6px #fef7c0);
+        }
+
+        @keyframes floatPetal {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.6); opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(300deg) scale(1.1); opacity: 0; }
+        }
+
+        @keyframes floatSpark {
+            0% { transform: translate(5vw, 100vh) scale(0.5); opacity: 0.5; }
+            50% { transform: translate(8vw, 40vh) scale(1.2) rotate(60deg); opacity: 1; }
+            100% { transform: translate(-5vw, -10vh) scale(0.3) rotate(120deg); opacity: 0; }
+        }
+
+        /* ========== ГЛАВНАЯ КАРТОЧКА ========== */
+        .event-card {
+            position: relative;
+            z-index: 10;
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 245, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 30px 50px rgba(55, 85, 45, 0.25), inset 0 1px 10px rgba(255, 255, 240, 0.9);
+            padding: 30px 30px 45px;
+            border: 2px solid #c6e2b5;
+        }
+
+        /* весенний чип */
+        .date-chip {
+            background: #619d7a;
+            color: #f6ffea;
+            padding: 12px 30px;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #2f6140;
+            border: 1px solid #d4f0c0;
+        }
+        .date-chip i {
+            margin-right: 10px;
+            color: #fff7b5;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            text-transform: uppercase;
+            color: #18522b;
+            text-shadow: 2px 2px 0 #b8e0a8, 5px 5px 0 rgba(45, 95, 45, 0.15);
+            letter-spacing: 2px;
+        }
+
+        .subhead {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #1f6133;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 10px 0 20px;
+        }
+        .subhead span {
+            background: #7dbd87;
+            color: #f4ffe7;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            box-shadow: inset 0 -2px 0 #317a42;
+        }
+
+        .place-time {
+            background: #cae9c5;
+            border-radius: 40px;
+            padding: 20px 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-around;
+            margin: 25px 0 35px;
+            border: 2px dashed #71a86b;
+            box-shadow: 0 8px 0 #428751;
+            color: #1f4a2a;
+            font-weight: 500;
+        }
+        .place-time i {
+            margin-right: 12px;
+            color: #256d34;
+            font-size: 1.4rem;
+        }
+        .place-time div {
+            font-size: 1.25rem;
+        }
+
+        /* билетные карточки */
+        .tickets-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0 30px;
+        }
+        .ticket-type {
+            background: #f7ffee;
+            border-radius: 40px 40px 30px 30px;
+            flex: 1 1 250px;
+            padding: 25px 15px 20px;
+            text-align: center;
+            border: 3px solid #9ec497;
+            transition: all 0.2s ease;
+            box-shadow: 0 12px 0 #559457, 0 7px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .ticket-type:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 0 #559457, 0 12px 25px rgba(40, 80, 30, 0.25);
+            background: #ffffff;
+        }
+        .ticket-type.selected {
+            border: 4px solid #f0c45a;
+            box-shadow: 0 12px 0 #3f8045, 0 0 0 3px #fceeb5;
+            background: #feffe5;
+        }
+        .ticket-type .emoji-big {
+            font-size: 3.8rem;
+            margin-bottom: 5px;
+            filter: drop-shadow(2px 6px 0 #7bb175);
+        }
+        .ticket-type h3 {
+            font-size: 2rem;
+            background: #aad4a0;
+            color: #194423;
+            padding: 8px 0;
+            border-radius: 40px;
+            margin: 15px 0 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #164d26;
+            background: #e8ffd6;
+            display: inline-block;
+            padding: 5px 25px;
+            border-radius: 60px;
+            border: 2px solid #559e5a;
+            margin: 15px 0 5px;
+        }
+        .price small {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        /* итог и кнопка */
+        .payment-area {
+            background: #c4e3b6;
+            border-radius: 60px;
+            padding: 20px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border: 3px solid #73b16d;
+            box-shadow: inset 0 2px 5px #eeffe0, 0 10px 0 #39753b;
+            margin-top: 20px;
+        }
+        .total-info {
+            font-size: 1.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #13522b;
+        }
+        .total-info i {
+            font-size: 2.5rem;
+            color: #35853f;
+        }
+        .total-sum {
+            background: #2f7540;
+            color: #f5ffe6;
+            padding: 10px 30px;
+            border-radius: 60px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            border: 2px solid #c0f0b0;
+            box-shadow: 0 5px 0 #195e2b;
+        }
+        .buy-btn {
+            background: #f8c150;
+            border: none;
+            color: #1d4121;
+            font-size: 2.2rem;
+            font-weight: 600;
+            padding: 15px 45px;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 12px 0 #b38f3a, 0 8px 20px rgba(0,0,0,0.25);
+            transition: 0.07s linear;
+            cursor: pointer;
+            border: 2px solid #fff2b2;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .buy-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 #b38f3a, 0 8px 20px black;
+        }
+        .buy-btn i {
+            font-size: 2.3rem;
+            color: #276d2a;
+        }
+        .phone-badge {
+            font-family: 'Inter', monospace;
+            background: #236f38;
+            color: #fdffd7;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: #256d37;
+            text-align: center;
+            font-weight: 400;
+        }
+        footer i {
+            color: #5dba76;
+        }
+
+        @media (max-width: 700px) {
+            h1 { font-size: 3rem; }
+            .subhead { font-size: 1.2rem; }
+            .payment-area { flex-direction: column; }
+            .total-info { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Весенний фон: лепестки и искры -->
+    <div class="spring-bg" id="springBackground"></div>
+
+    <main class="event-card">
+        <div class="date-chip"><i class="fas fa-seedling"></i> 2 МАРТА · ВЕСНА В ДВИЖЕНИИ ✨</div>
+        <h1>TIMEHOME <span style="font-size: 2rem; background: #8cc18a; padding: 5px 18px; border-radius: 80px; color: #f3ffe3;">THME</span></h1>
+        <div class="subhead">
+            <span>🌸 Концерт весеннего равноденствия</span>
+            <i class="fas fa-ticket-alt" style="font-size: 1.8rem;"></i>
+        </div>
+
+        <div class="place-time">
+            <div><i class="fas fa-map-pin"></i> Г. Мглин, Ул. Буденного, 7а</div>
+            <div><i class="fas fa-clock"></i> 22:30 — 00:00</div>
+        </div>
+
+        <!-- Билеты -->
+        <div class="tickets-grid">
+            <div class="ticket-type" data-price="350" data-name="обычный">
+                <div class="emoji-big">🎫</div>
+                <h3>ОБЫЧНЫЙ</h3>
+                <div class="price">350 ₽</div>
+                <div style="font-size: 1rem;">входной билет</div>
+            </div>
+            <div class="ticket-type" data-price="750" data-name="VIP">
+                <div class="emoji-big">🌟</div>
+                <h3>VIP ЗОНА</h3>
+                <div class="price">750 ₽</div>
+                <div style="font-size: 1rem;">отдельный лаунж</div>
+            </div>
+            <div class="ticket-type" data-price="2400" data-name="сцена">
+                <div class="emoji-big">🎤</div>
+                <h3>ВЫХОД НА СЦЕНУ</h3>
+                <div class="price">2 400 ₽</div>
+                <div style="font-size: 1rem;">+ бэкстейдж</div>
+            </div>
+        </div>
+
+        <!-- Блок оплаты -->
+        <div class="payment-area">
+            <div class="total-info">
+                <i class="fas fa-wallet"></i>
+                <span>к оплате:</span>
+                <span class="total-sum" id="totalAmount">350 ₽</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                    <span class="phone-badge"><i class="fas fa-phone-alt"></i> +7 960 564-16-49</span>
+                    <button class="buy-btn" id="payBtn">
+                        <i class="fas fa-bolt"></i> Купить <i class="fas fa-leaf"></i>
+                    </button>
+                </div>
+                <div style="font-size: 0.9rem; margin-top: 8px; color: #1d622a;">СМС с сумой откроется автоматически</div>
+            </div>
+        </div>
+
+        <footer>
+            <i class="fas fa-leaf"></i> Лепестки сакуры, тёплый вечер · Перевод на номер +7 (960) 564-16-49 <i class="fas fa-leaf"></i>
+        </footer>
+    </main>
+
+    <script>
+        (function() {
+            const tickets = document.querySelectorAll('.ticket-type');
+            const totalSpan = document.getElementById('totalAmount');
+            const payBtn = document.getElementById('payBtn');
+
+            let currentPrice = 350;
+            let currentName = 'обычный';
+            const phoneNumber = '+79605641649';
+
+            tickets.forEach(ticket => {
+                ticket.addEventListener('click', function(e) {
+                    tickets.forEach(t => t.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    const price = parseInt(this.dataset.price, 10);
+                    const name = this.dataset.name;
+
+                    if (!isNaN(price)) {
+                        currentPrice = price;
+                        currentName = name;
+                        totalSpan.innerText = price.toLocaleString() + ' ₽';
+                    }
+                });
+            });
+
+            if (tickets.length > 0) tickets[0].classList.add('selected');
+
+            payBtn.addEventListener('click', function() {
+                const price = currentPrice;
+                const name = currentName;
+
+                const message = `Перевод ${price} руб за билет THME (${name})`;
+                const smsLink = `sms:${phoneNumber}?body=${encodeURIComponent(message)}`;
+
+                window.location.href = smsLink;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(`${phoneNumber} ${price}р THME`);
+                }
+
+                setTimeout(() => {
+                    alert(`✨ Перевод ${price} ₽ на номер ${phoneNumber}\nСумма уже в СМС. Спасибо!`, '');
+                }, 100);
+            });
+
+            // Генерация лепестков и искр
+            function createSpringElements() {
+                const bg = document.getElementById('springBackground');
+                // Лепестки
+                for (let i = 0; i < 24; i++) {
+                    const petal = document.createElement('div');
+                    petal.classList.add('petal');
+                    petal.style.left = Math.random() * 100 + '%';
+                    petal.style.animationDuration = (12 + Math.random() * 20) + 's';
+                    petal.style.animationDelay = (Math.random() * 12) + 's';
+                    petal.style.width = (20 + Math.random() * 35) + 'px';
+                    petal.style.height = petal.style.width;
+                    bg.appendChild(petal);
+                }
+                // Искры
+                for (let i = 0; i < 18; i++) {
+                    const spark = document.createElement('div');
+                    spark.classList.add('spark');
+                    spark.style.left = Math.random() * 100 + '%';
+                    spark.style.animationDuration = (10 + Math.random() * 25) + 's';
+                    spark.style.animationDelay = (Math.random() * 10) + 's';
+                    spark.style.width = (12 + Math.random() * 25) + 'px';
+                    spark.style.height = spark.style.width;
+                    bg.appendChild(spark);
+                }
+            }
+            createSpringElements();
+        })();
+    </script>
+</body>
+</html>
